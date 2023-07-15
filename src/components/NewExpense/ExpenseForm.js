@@ -1,24 +1,55 @@
-import React from "react";
+import React, {useState} from "react";
 import './ExpenseForm.css';
 
 const ExpenseForm = () =>
-{
+{   
+    const [enteredTitle, setEnteredTitle] = useState('');
+    const [enteredAmount, setEnteredAmount] = useState('');
+    const [enteredDate, setEnteredDate] = useState('');
+
+    const titleChangeHandler = (event) =>{
+        setEnteredTitle(event.target.value);
+    }
+
+    const amountChangeHandler = event =>{
+        setEnteredAmount(event.target.value);
+    };
+
+    const dateChangeHandler = event => {
+        setEnteredDate(event.target.value);
+    };
+
+    const submitHandler = event => {
+        event.preventDefault();
+
+        const expenseData = {
+            title: enteredTitle,
+            amount: enteredAmount,
+            date: new Date(enteredDate)
+        };
+
+        console.log(expenseData)
+        setEnteredTitle('');
+        setEnteredAmount('');
+        setEnteredDate('');
+    };
+
     return (
-        <form>
+        <form onSubmit={submitHandler}>
             <div className="new-expense__controls">
                 <div>
                     <lebel className="label">Title</lebel>
-                    <input className="input" type="text" />
+                    <input className="input" type="text" value={enteredTitle} onChange={titleChangeHandler} />
                 </div>
 
                 <div>
                     <lebel className="label" >Amount</lebel>
-                    <input className="input" type="number" min="0.01" step ="0.01" />
+                    <input className="input" type="number" min="0.01" step ="0.01" value={enteredAmount} onChange={amountChangeHandler} />
                 </div>
 
                 <div>
                     <lebel className="label">Date</lebel>
-                    <input className="input" type="date" min='2019-01-01' max="2023-12-31" />
+                    <input className="input" type="date" min='2019-01-01' max="2023-12-31" value={enteredDate} onChange={dateChangeHandler} />
                 </div>
             </div>
 
